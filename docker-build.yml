@@ -1,0 +1,23 @@
+name: CI/CD Pipeline for Docker Node App
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build Docker image
+      run: docker build -t docker-node-app .
+
+    - name: Run Docker container
+      run: docker run -d -p 3000:3000 docker-node-app
